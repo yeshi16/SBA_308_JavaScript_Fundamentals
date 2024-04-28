@@ -121,3 +121,22 @@ function getLearnerId(LearnerSubmission){
 
 /****************************************/
 
+// assignment possible points
+function points(assigInfo){
+  let idPoints = []
+  for(let i = 0; i < assigInfo.length; i++){
+    let assigId = assigInfo[i].id;
+    let points = assigInfo[i].points_possible;
+    const idPoint = {
+      id: assigId,
+      pointsPossible: points
+    };
+    idPoints.push(idPoint);
+  }
+  return idPoints;
+}
+
+// let allpoints = points(assignmentInfo);
+// console.log(allpoints)
+
+/********************/
