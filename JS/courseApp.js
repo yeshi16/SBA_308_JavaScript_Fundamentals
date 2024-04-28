@@ -141,9 +141,9 @@ function points(assigInfo){
 
 /********************//********************/
 
- function score(LearnerSubmission){
+ function learnerTotalScore(LearnerSubmission){
   let scr = 0
-  let learnerScore1 = []
+  let learnerScore = []
   let d = LearnerSubmission[0].learner_id
   const scoreObj = {
     id: null,
@@ -157,14 +157,14 @@ function points(assigInfo){
       //console.log(scoreObj)
       d = LearnerSubmission[i].learner_id
       scr = LearnerSubmission[i].submission.score;
-      console.log(scoreObj)
-      learnerScore1.push(scoreObj)
+      //console.log(scoreObj)
+      learnerScore.push(scoreObj)
     }else if(i == LearnerSubmission.length -1){
       scr += LearnerSubmission[i].submission.score;
       scoreObj.id = d,
       scoreObj.score = scr
-    console.log(scoreObj)
-    learnerScore1.push(scoreObj)
+    //console.log(scoreObj)
+    learnerScore.push(scoreObj)
   
     }
     else{
@@ -172,7 +172,8 @@ function points(assigInfo){
       scr += LearnerSubmission[i].submission.score;
     }
   }
-  //return learnerScore1
+  console.log(learnerScore)
+  return learnerScore
  }
 
- //score(LearnerSubmissions)
+ //learnerTotalScore(LearnerSubmissions)
