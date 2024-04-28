@@ -145,47 +145,42 @@ function points(assigInfo) {
 // console.log(allpoints)
 
 /********************//********************/
-function learnerTotalScore(LearnerSubmission) {
-  let scr = 0
-  let learnerScore = []
-  let d = LearnerSubmission[0].learner_id
-  let assigId = []
-  const scoreObj = {
-    id: null,
-    score: null,
-    assignmentId: null
-  };
+function learnerTotalScore(LearnerSubmission){
+  let scr = 0;
+  let learnerScore = [];
+  let d = LearnerSubmission[0].learner_id;
+  let assigId = [];
 
-  for (let i = 0; i < LearnerSubmission.length; i++) {
+  for(let i = 0; i < LearnerSubmission.length; i++){
     let asid = LearnerSubmission[i].assignment_id
-    if (d !== LearnerSubmission[i].learner_id) {
-      scoreObj.id = d,
-        scoreObj.score = scr,
-        scoreObj.assignmentId = assigId
-      //console.log(scoreObj)
+    if(d !== LearnerSubmission[i].learner_id ){
+      const scoreObj = {
+        id: d,
+        score: scr,
+        assignmentId: assigId 
+      };
+      learnerScore.push({ ...scoreObj });
       d = LearnerSubmission[i].learner_id
       scr = LearnerSubmission[i].submission.score;
       //console.log(scoreObj)
-      learnerScore.push(scoreObj)
-    } else if (i == LearnerSubmission.length - 1) {
+    }else if(i == LearnerSubmission.length -1){
       scr += LearnerSubmission[i].submission.score;
-      scoreObj.id = d,
-        scoreObj.score = scr,
-        scoreObj.assignmentId = assigId
-      //console.log(scoreObj)
-      learnerScore.push(scoreObj)
+      learnerScore.push({
+        id: d,
+        score: scr,
+        assignmentId: assigId 
+      });
     }
-    else {
+    else{
       //console.log(s)
       scr += LearnerSubmission[i].submission.score;
       assigId.push(asid)
     }
   }
-  //console.log(learnerScore)
   return learnerScore
-}
+ }
 
-//console.log(learnerTotalScore(LearnerSubmissions))
+console.log(learnerTotalScore(LearnerSubmissions))
 
 /********************//********************/
 
@@ -204,54 +199,4 @@ let allpoints = points(assignmentInfo);
 
 
 
- function score1(LearnerSubmission){
-  let scr = 0
-  let learnerScore1 = []
-  let d = LearnerSubmission[0].learner_id
-  let assigId = []
-  // const scoreObj = {
-  //   id: null,
-  //   score: null,
-  //   assignmentId: null
-  // };
-
-  for(let i = 0; i < LearnerSubmission.length; i++){
-    let asid = LearnerSubmission[i].assignment_id
-    if(d !== LearnerSubmission[i].learner_id ){
-      // scoreObj.id = d,
-      // scoreObj.score = scr,
-      // scoreObj.assignmentId = assigId
-      //learnerScore1.push(scoreObj)
-      const scoreObj = {
-        id: d,
-        score: scr,
-        assignmentId: assigId 
-      };
-      learnerScore1.push({ ...scoreObj });
-      d = LearnerSubmission[i].learner_id
-      scr = LearnerSubmission[i].submission.score;
-      //console.log(scoreObj)
-      //assigId = [asid];
-    }else if(i == LearnerSubmission.length -1){
-      scr += LearnerSubmission[i].submission.score;
-      learnerScore1.push({
-        id: d,
-        score: scr,
-        assignmentId: assigId 
-      });
-      // scoreObj.id = d,
-      // scoreObj.score = scr,
-      // scoreObj.assignmentId = assigId
-    //console.log(scoreObj)
-    //learnerScore1 = [ ...scoreObj]
-    }
-    else{
-      //console.log(s)
-      scr += LearnerSubmission[i].submission.score;
-      assigId.push(asid)
-    }
-  }
-  return learnerScore1
- }
-
-console.log(score1(LearnerSubmissions))
+ 
