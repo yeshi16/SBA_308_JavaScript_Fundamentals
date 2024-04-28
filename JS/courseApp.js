@@ -141,56 +141,38 @@ function points(assigInfo){
 
 /********************//********************/
 
-  // scores 
- 
-  let learnerScore = []
-  for (let submission of LearnerSubmissions) {
-   let scores = submission.submission.score;
-   let ids = submission.learner_id
-   const scoreObj = {
-    id: ids,
-    score: scores
-   }
-   learnerScore.push(scoreObj);
-  }
-  //console.log(learnerScore)
-  
-  
-  let s = 0
-  let learnerScore1= []
-  let d = learnerScore[0].id
-  //let i = 0
+ function score(LearnerSubmission){
+  let scr = 0
+  let learnerScore1 = []
+  let d = LearnerSubmission[0].learner_id
   const scoreObj = {
     id: null,
     score: null
   };
   
-  for(let i = 0; i < learnerScore.length; i++){
-    //console.log(d)
-      //console.log(learnerScore[i].id)
-    if(d !== learnerScore[i].id ){
-    
+  for(let i = 0; i < LearnerSubmission.length; i++){
+    if(d !== LearnerSubmission[i].learner_id ){
       scoreObj.id = d,
-      scoreObj.score = s
-      
+      scoreObj.score = scr
       //console.log(scoreObj)
-      
-      d = learnerScore[i].id
-      s = learnerScore[i].score;
-      //console.log(scoreObj)
-   
+      d = LearnerSubmission[i].learner_id
+      scr = LearnerSubmission[i].submission.score;
+      console.log(scoreObj)
       learnerScore1.push(scoreObj)
-    }else if(i == learnerScore.length -1){
-      s += learnerScore[i].score;
+    }else if(i == LearnerSubmission.length -1){
+      scr += LearnerSubmission[i].submission.score;
       scoreObj.id = d,
-      scoreObj.score = s
-    //console.log(scoreObj)
+      scoreObj.score = scr
+    console.log(scoreObj)
     learnerScore1.push(scoreObj)
+  
     }
     else{
       //console.log(s)
-      s += learnerScore[i].score;
+      scr += LearnerSubmission[i].submission.score;
     }
   }
-  
- //console.log(learnerScore1)
+  //return learnerScore1
+ }
+
+ //score(LearnerSubmissions)
