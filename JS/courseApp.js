@@ -225,19 +225,19 @@ let allpoints = points(assignmentInfo);
       const scoreObj = {
         id: d,
         score: scr,
-        assignmentId: assigId.slice() 
+        assignmentId: assigId 
       };
       learnerScore1.push({ ...scoreObj });
       d = LearnerSubmission[i].learner_id
       scr = LearnerSubmission[i].submission.score;
       //console.log(scoreObj)
-      assigId = [asid];
+      //assigId = [asid];
     }else if(i == LearnerSubmission.length -1){
       scr += LearnerSubmission[i].submission.score;
       learnerScore1.push({
         id: d,
         score: scr,
-        assignmentId: assigId.slice() 
+        assignmentId: assigId 
       });
       // scoreObj.id = d,
       // scoreObj.score = scr,
@@ -254,3 +254,4 @@ let allpoints = points(assignmentInfo);
   return learnerScore1
  }
 
+console.log(score1(LearnerSubmissions))
