@@ -225,7 +225,7 @@ let allpoints = points(assignmentInfo);
       const scoreObj = {
         id: d,
         score: scr,
-        assignmentId: assigId.slice() // Copy assignmentId array
+        assignmentId: assigId.slice() 
       };
       learnerScore1.push({ ...scoreObj });
       d = LearnerSubmission[i].learner_id
