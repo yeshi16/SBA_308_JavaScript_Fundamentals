@@ -139,4 +139,59 @@ function points(assigInfo){
 // let allpoints = points(assignmentInfo);
 // console.log(allpoints)
 
-/********************/
+/********************//********************/
+
+  // scores 
+ 
+  let learnerScore = []
+  for (let submission of LearnerSubmissions) {
+   let scores = submission.submission.score;
+   let ids = submission.learner_id
+   const scoreObj = {
+    id: ids,
+    score: scores
+   }
+   learnerScore.push(scoreObj);
+  }
+  //console.log(learnerScore)
+  
+  
+  let s = 0
+  let learnerScore1= []
+  let d = learnerScore[0].id
+  //let i = 0
+  const scoreObj = {
+    id: null,
+    score: null
+  };
+  
+  for(let i = 0; i < learnerScore.length; i++){
+    //console.log(d)
+      //console.log(learnerScore[i].id)
+    if(d !== learnerScore[i].id ){
+    
+      scoreObj.id = d,
+      scoreObj.score = s
+      
+      //console.log(scoreObj)
+      
+      d = learnerScore[i].id
+      s = learnerScore[i].score;
+      console.log(scoreObj)
+    }
+    // else if(learnerScore.length-1){
+    //   d = learnerScore[i].id
+    //   s = learnerScore[i].score;
+    //   console.log(scoreObj)
+    //   //learnerScore1.push(scoreObj)
+    // }
+      else{
+      //console.log(s)
+      s += learnerScore[i].score;
+    }
+    //learnerScore1.push(scoreObj)
+  }
+  
+  //console.log(learnerScore1)
+  
+     // totalScore += submission.submission.score;
