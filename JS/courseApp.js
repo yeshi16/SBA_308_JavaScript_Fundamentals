@@ -126,8 +126,11 @@ function points(assigInfo) {
   let idPoints = []
   const date = new Date();
   for (let i = 0; i < assigInfo.length; i++) {
-    if (assigInfo.due_at > date) {
-      continue;
+    //console.log(date)
+    //console.log(assigInfo[i].due_at < date)
+    const dueDate = new Date(assigInfo[i].due_at);
+    if (dueDate > date) {
+      break;
     } else {
       let assigId = assigInfo[i].id;
       let points = assigInfo[i].points_possible;
@@ -149,15 +152,15 @@ function learnerTotalScore(LearnerSubmission){
   let scr = 0;
   let learnerScore = [];
   let d = LearnerSubmission[0].learner_id;
-  let assigId = [];
+  //let assigId = [];
 
   for(let i = 0; i < LearnerSubmission.length; i++){
-    let asid = LearnerSubmission[i].assignment_id
+    //let asid = LearnerSubmission[i].assignment_id
     if(d !== LearnerSubmission[i].learner_id ){
       const scoreObj = {
         id: d,
-        score: scr,
-        assignmentId: assigId 
+        score: scr
+        //assignmentId: assigId 
       };
       learnerScore.push({ ...scoreObj });
       d = LearnerSubmission[i].learner_id
@@ -167,20 +170,20 @@ function learnerTotalScore(LearnerSubmission){
       scr += LearnerSubmission[i].submission.score;
       learnerScore.push({
         id: d,
-        score: scr,
-        assignmentId: assigId 
+        score: scr
+        //assignmentId: assigId 
       });
     }
     else{
       //console.log(s)
       scr += LearnerSubmission[i].submission.score;
-      assigId.push(asid)
+      //assigId.push(asid)
     }
   }
   return learnerScore
  }
 
-console.log(learnerTotalScore(LearnerSubmissions))
+//console.log(learnerTotalScore(LearnerSubmissions))
 
 /********************//********************/
 
@@ -193,8 +196,8 @@ function avg() {
 
 let totalScore = learnerTotalScore(LearnerSubmissions, assignmentInfo);
 let allpoints = points(assignmentInfo);
-  // console.log(totalScore) // [{ id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }, { id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }]
-// console.log(allpoints) //[{ id: 1, pointsPossible: 50 }, { id: 2, pointsPossible: 150 },{ id: 3, pointsPossible: 500 }]
+console.log(totalScore) // [{ id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }, { id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }]
+console.log(allpoints) //[{ id: 1, pointsPossible: 50 }, { id: 2, pointsPossible: 150 },{ id: 3, pointsPossible: 500 }]
 
 
 
