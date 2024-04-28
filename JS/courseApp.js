@@ -145,15 +145,19 @@ function points(assigInfo){
   let scr = 0
   let learnerScore = []
   let d = LearnerSubmission[0].learner_id
+  let assigId = []
   const scoreObj = {
     id: null,
-    score: null
+    score: null,
+    assignmentId: null
   };
   
   for(let i = 0; i < LearnerSubmission.length; i++){
+    let asid = LearnerSubmission[i].assignment_id
     if(d !== LearnerSubmission[i].learner_id ){
       scoreObj.id = d,
-      scoreObj.score = scr
+      scoreObj.score = scr,
+      scoreObj.assignmentId = assigId
       //console.log(scoreObj)
       d = LearnerSubmission[i].learner_id
       scr = LearnerSubmission[i].submission.score;
@@ -162,18 +166,33 @@ function points(assigInfo){
     }else if(i == LearnerSubmission.length -1){
       scr += LearnerSubmission[i].submission.score;
       scoreObj.id = d,
-      scoreObj.score = scr
+      scoreObj.score = scr,
+      scoreObj.assignmentId = assigId
     //console.log(scoreObj)
     learnerScore.push(scoreObj)
-  
     }
     else{
       //console.log(s)
       scr += LearnerSubmission[i].submission.score;
+      assigId.push(asid)
     }
   }
-  console.log(learnerScore)
+  //console.log(learnerScore)
   return learnerScore
  }
 
- //learnerTotalScore(LearnerSubmissions)
+ console.log(learnerTotalScore(LearnerSubmissions))
+
+ /********************//********************/
+
+ // calculate avg
+ function avg(){
+
+ }
+
+ // submission.score / point possible
+
+ let totalScore = learnerTotalScore(LearnerSubmissions);
+ let allpoints = points(assignmentInfo);
+//  console.log(totalScore) // [{ id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }, { id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }]
+// console.log(allpoints) //[{ id: 1, pointsPossible: 50 }, { id: 2, pointsPossible: 150 },{ id: 3, pointsPossible: 500 }]
