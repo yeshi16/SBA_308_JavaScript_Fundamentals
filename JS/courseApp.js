@@ -145,7 +145,6 @@ function points(assigInfo) {
 // console.log(allpoints)
 
 /********************//********************/
-
 function learnerTotalScore(LearnerSubmission) {
   let scr = 0
   let learnerScore = []
@@ -186,7 +185,7 @@ function learnerTotalScore(LearnerSubmission) {
   return learnerScore
 }
 
-console.log(learnerTotalScore(LearnerSubmissions))
+//console.log(learnerTotalScore(LearnerSubmissions))
 
 /********************//********************/
 
@@ -197,7 +196,61 @@ function avg() {
 
 // submission.score / point possible
 
-let totalScore = learnerTotalScore(LearnerSubmissions);
+let totalScore = learnerTotalScore(LearnerSubmissions, assignmentInfo);
 let allpoints = points(assignmentInfo);
-//  console.log(totalScore) // [{ id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }, { id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }]
- console.log(allpoints) //[{ id: 1, pointsPossible: 50 }, { id: 2, pointsPossible: 150 },{ id: 3, pointsPossible: 500 }]
+  // console.log(totalScore) // [{ id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }, { id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }]
+// console.log(allpoints) //[{ id: 1, pointsPossible: 50 }, { id: 2, pointsPossible: 150 },{ id: 3, pointsPossible: 500 }]
+
+
+
+
+ function score1(LearnerSubmission){
+  let scr = 0
+  let learnerScore1 = []
+  let d = LearnerSubmission[0].learner_id
+  let assigId = []
+  // const scoreObj = {
+  //   id: null,
+  //   score: null,
+  //   assignmentId: null
+  // };
+
+  for(let i = 0; i < LearnerSubmission.length; i++){
+    let asid = LearnerSubmission[i].assignment_id
+    if(d !== LearnerSubmission[i].learner_id ){
+      // scoreObj.id = d,
+      // scoreObj.score = scr,
+      // scoreObj.assignmentId = assigId
+      //learnerScore1.push(scoreObj)
+      const scoreObj = {
+        id: d,
+        score: scr,
+        assignmentId: assigId.slice() // Copy assignmentId array
+      };
+      learnerScore1.push({ ...scoreObj });
+      d = LearnerSubmission[i].learner_id
+      scr = LearnerSubmission[i].submission.score;
+      //console.log(scoreObj)
+      assigId = [asid];
+    }else if(i == LearnerSubmission.length -1){
+      scr += LearnerSubmission[i].submission.score;
+      learnerScore1.push({
+        id: d,
+        score: scr,
+        assignmentId: assigId.slice() 
+      });
+      // scoreObj.id = d,
+      // scoreObj.score = scr,
+      // scoreObj.assignmentId = assigId
+    //console.log(scoreObj)
+    //learnerScore1 = [ ...scoreObj]
+    }
+    else{
+      //console.log(s)
+      scr += LearnerSubmission[i].submission.score;
+      assigId.push(asid)
+    }
+  }
+  return learnerScore1
+ }
+
