@@ -177,21 +177,20 @@ function points(assigInfo){
       
       d = learnerScore[i].id
       s = learnerScore[i].score;
-      console.log(scoreObj)
+      //console.log(scoreObj)
+   
+      learnerScore1.push(scoreObj)
+    }else if(i == learnerScore.length -1){
+      s += learnerScore[i].score;
+      scoreObj.id = d,
+      scoreObj.score = s
+    //console.log(scoreObj)
+    learnerScore1.push(scoreObj)
     }
-    // else if(learnerScore.length-1){
-    //   d = learnerScore[i].id
-    //   s = learnerScore[i].score;
-    //   console.log(scoreObj)
-    //   //learnerScore1.push(scoreObj)
-    // }
-      else{
+    else{
       //console.log(s)
       s += learnerScore[i].score;
     }
-    //learnerScore1.push(scoreObj)
   }
   
-  //console.log(learnerScore1)
-  
-     // totalScore += submission.submission.score;
+ //console.log(learnerScore1)
