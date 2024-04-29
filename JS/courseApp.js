@@ -130,7 +130,7 @@ function points(assigInfo) {
     //console.log(assigInfo[i].due_at < date)
     const dueDate = new Date(assigInfo[i].due_at);
     if (dueDate > date) {
-      break;
+      continue;
     } else {
       let assigId = assigInfo[i].id;
       let points = assigInfo[i].points_possible;
@@ -143,63 +143,97 @@ function points(assigInfo) {
   }
   return idPoints;
 }
+// let allpoint = points(assignmentInfo);
+//console.log(allpoints[0].id)
+// console.log(allpoint)
 
-// let allpoints = points(assignmentInfo);
-// console.log(allpoints)
+
+
 
 /********************//********************/
-function learnerTotalScore(LearnerSubmission){
+function learnerTotalScore(LearnerSubmission) {
   let scr = 0;
   let learnerScore = [];
   let d = LearnerSubmission[0].learner_id;
-  //let assigId = [];
-
-  for(let i = 0; i < LearnerSubmission.length; i++){
-    //let asid = LearnerSubmission[i].assignment_id
-    if(d !== LearnerSubmission[i].learner_id ){
+  let assigId = [];
+  let allpoints = points(assignmentInfo);
+  let pointIndex = 0
+  //let pointId = allpoints[pointIndex].id;
+  for (let i = 0; i < LearnerSubmission.length; i++) {
+    // console.log(LearnerSubmission[i].assignment_id)
+    // console.log(pointIndex)
+    //if(LearnerSubmission[i].assignment_id == allpoints[pointIndex].id){
+    let asid = LearnerSubmission[i].assignment_id
+    pointIndex++
+    if (d !== LearnerSubmission[i].learner_id) {
       const scoreObj = {
         id: d,
-        score: scr
-        //assignmentId: assigId 
+        score: scr,
+        assignmentId: assigId
       };
       learnerScore.push({ ...scoreObj });
       d = LearnerSubmission[i].learner_id
       scr = LearnerSubmission[i].submission.score;
       //console.log(scoreObj)
-    }else if(i == LearnerSubmission.length -1){
+    } else if (i == LearnerSubmission.length - 1) {
       scr += LearnerSubmission[i].submission.score;
       learnerScore.push({
         id: d,
-        score: scr
-        //assignmentId: assigId 
+        score: scr,
+        assignmentId: assigId
       });
     }
-    else{
+    else {
       //console.log(s)
       scr += LearnerSubmission[i].submission.score;
-      //assigId.push(asid)
+      assigId.push(asid)
     }
+
   }
+  //pointIndex = 0
+  //}
   return learnerScore
- }
+}
 
 //console.log(learnerTotalScore(LearnerSubmissions))
 
 /********************//********************/
 
 // calculate avg
-function avg() {
+function avg(assigInfo, LearnerSubmissions) {
 
 }
 
 // submission.score / point possible
+// avg: 0.985,  (47 + 150) / (50 + 150)
 
-let totalScore = learnerTotalScore(LearnerSubmissions, assignmentInfo);
+
+//console.log(learnerTotalScore(LearnerSubmissions)) //[ { id: 125, score: 597, assignmentId: [ 1, 2, 3 ] }, { id: 132, score: 179, assignmentId: [ 1, 2, 3 ] } ]
+//let allpoints = points(assignmentInfo);
+//console.log(allpoints) //[ { id: 1, pointsPossible: 50 }, { id: 2, pointsPossible: 150 } ]
+
+let scores = learnerTotalScore(LearnerSubmissions)
 let allpoints = points(assignmentInfo);
-console.log(totalScore) // [{ id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }, { id: 132, score: 179, assignmentId: [ 1, 2, 3 ] }]
-console.log(allpoints) //[{ id: 1, pointsPossible: 50 }, { id: 2, pointsPossible: 150 },{ id: 3, pointsPossible: 500 }]
+let avg1 = 0;
+for (let i = 0; i < scores.length; i++) {
+  //console.log(scores[i].score);
+  let totalPts = 0
+  for (let j = 0; j < allpoints.length; j++) {
+    // console.log(scores[j].assignmentId[j] )
+    // console.log(allpoints[j].id)
+    if (scores[j].assignmentId[j] == allpoints[j].id) {
 
+      totalPts += allpoints[j].pointsPossible
+      //console.log(totalPts)
+    }
+    
+  }
+  avg1 = scores[i].score / totalPts
+  console.log(avg1)
+}
 
+//let scoreVal = scores.map(score => score.score);
+//console.log(scoreVal);
+//let ptPossibleVal = allpoints.map(point => point.pointsPossible);
+//console.log(ptPossibleVal);
 
-
- 
