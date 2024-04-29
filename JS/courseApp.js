@@ -79,22 +79,6 @@ const LearnerSubmissions = [
     }
   }
 ];
-/* result
-  [
-    {
-      id: 125,
-      avg: 0.985, // (47 + 150) / (50 + 150)
-      1: 0.94, // 47 / 50
-      2: 1.0 // 150 / 150
-    },
-    {
-      id: 132,
-      avg: 0.82, // (39 + 125) / (50 + 150)
-      1: 0.78, // 39 / 50
-      2: 0.833 // late: (140 - 15) / 150
-    }
-  ];
-*/
 
 
 
@@ -199,11 +183,7 @@ function learnerTotalScore(LearnerSubmission) {
 
 /********************//********************/
 
-// calculate avg
-function avg(assigInfo, LearnerSubmissions) {
-
-}
-
+// calculate all assignment avg
 // submission.score / point possible
 // avg: 0.985,  (47 + 150) / (50 + 150)
 
@@ -212,28 +192,126 @@ function avg(assigInfo, LearnerSubmissions) {
 //let allpoints = points(assignmentInfo);
 //console.log(allpoints) //[ { id: 1, pointsPossible: 50 }, { id: 2, pointsPossible: 150 } ]
 
-let scores = learnerTotalScore(LearnerSubmissions)
-let allpoints = points(assignmentInfo);
-let avg1 = 0;
-for (let i = 0; i < scores.length; i++) {
-  //console.log(scores[i].score);
-  let totalPts = 0
-  for (let j = 0; j < allpoints.length; j++) {
-    // console.log(scores[j].assignmentId[j] )
-    // console.log(allpoints[j].id)
-    if (scores[j].assignmentId[j] == allpoints[j].id) {
+function courseAvg(assigInfo, LearnerSubmission) {
+  let scores = learnerTotalScore(LearnerSubmission)
+  let allpoints = points(assigInfo);
+  let avgScores = []
+  let avg = 0;
+  for (let i = 0; i < scores.length; i++) {
+    //console.log(scores[i].score);
+    let totalPts = 0
+    for (let j = 0; j < allpoints.length; j++) {
+      // console.log(scores[j].assignmentId[j] )
+      // console.log(allpoints[j].id)
+      if (scores[j].assignmentId[j] == allpoints[j].id) {
 
-      totalPts += allpoints[j].pointsPossible
-      //console.log(totalPts)
+        totalPts += allpoints[j].pointsPossible
+        //console.log(totalPts)
+      }
+
     }
-    
+    avg = scores[i].score / totalPts
+    // console.log(avg)
+    avgScores.push({
+      LearnerId: scores[i].id,
+      average: avg
+    });
   }
-  avg1 = scores[i].score / totalPts
-  console.log(avg1)
+  return avgScores;
 }
 
-//let scoreVal = scores.map(score => score.score);
-//console.log(scoreVal);
-//let ptPossibleVal = allpoints.map(point => point.pointsPossible);
-//console.log(ptPossibleVal);
+//console.log(courseAvg(assignmentInfo, LearnerSubmissions))
 
+
+
+
+
+
+
+
+// get each assignment avg
+// 1: 0.78, // 39 / 50
+// 2: 0.833 // late: (140 - 15) / 150
+
+function eachAssiAvg(assigInfo, LearnerSubmission) {
+  let scores = learnerTotalScore(LearnerSubmission)
+  let allpoints = points(assigInfo);
+  let avg = 0;
+  for (let i = 0; i < scores.length; i++) {
+
+    for (let j = 0; j < allpoints.length; j++) {
+      if (scores[j].assignmentId[j] == allpoints[j].id) {
+        console.log("id is:" + scores[j].assignmentId[j])
+        avg = LearnerSubmission[j].submission.score / allpoints[j].pointsPossible
+        //console.log(avg);
+      }
+    }
+  }
+}
+
+let scores = learnerTotalScore(LearnerSubmissions)
+let allpoints = points(assignmentInfo);
+let avg = 0;
+for (let i = 0; i < scores.length; i++) {
+
+  for (let j = 0; j < allpoints.length; j++) {
+    if (scores[j].assignmentId[j] == allpoints[j].id) {
+      //console.log("id is:" + scores[j].assignmentId[j])
+      let te = LearnerSubmissions[j].submission.score
+      let tes = allpoints[j].pointsPossible
+      avg = LearnerSubmissions[j].submission.score / allpoints[j].pointsPossible
+      //console.log(avg)
+
+    }
+  }
+}
+
+
+
+/* result
+  [
+    {
+      id: 125,
+      avg: 0.985, // (47 + 150) / (50 + 150)
+      1: 0.94, // 47 / 50
+      2: 1.0 // 150 / 150
+    },
+    {
+      id: 132,
+      avg: 0.82, // (39 + 125) / (50 + 150)
+      1: 0.78, // 39 / 50
+      2: 0.833 // late: (140 - 15) / 150
+    }
+  ];
+*/
+
+//console.log(getLearnerId(LearnerSubmissions))// [ 125, 125, 125, 132, 132 ]
+//console.log(courseAvg(assignmentInfo, LearnerSubmissions)) // [{ LearnerId: 125, average: 2.985 }, { LearnerId: 132, average: 0.895 }]
+//console.log(courseAvg(assignmentInfo, LearnerSubmissions)) //[ { LearnerId: 125, average: 2.985 }, { LearnerId: 132, average: 0.895 } ]
+function result(LearnerSubmissions, assignmentInfo) {
+  //let learnerID = points(assignmentInfo);
+  let avgScores = courseAvg(assignmentInfo, LearnerSubmissions)
+  let eachAvg = eachAssiAvg(assignmentInfo, LearnerSubmissions);
+  //let allpoints = points(assignmentInfo);
+// let restultPrint = []
+// restultPrint.push({
+//   id: d,
+//   score: scr,
+//   assignmentId: assigId
+// });
+for(let i = 0; i < avgScores.length; i++){
+  let id = avgScores[i].LearnerId;
+  let avg = avgScores[i].average;
+  let eachAssId = 1 // eachAvg[i].id
+  let eachAvrg = 2 //eachAvg[i].avg
+  console.log(`
+    { 
+      id: ${id}, 
+      avg: ${avg},
+      ${eachAssId}: ${eachAvrg}
+    } 
+  `);
+}
+}
+
+console.log(result(LearnerSubmissions, assignmentInfo))
