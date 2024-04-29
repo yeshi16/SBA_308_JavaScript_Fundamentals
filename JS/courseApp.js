@@ -128,6 +128,7 @@ console.log(learnerID)
 
 // assignment possible points
 function points(assigInfo) {
+  checkCourseMatch(AssignmentGroup, CourseInfo);
   let idPoints = []
   const date = new Date();
   for (let i = 0; i < assigInfo.length; i++) {
