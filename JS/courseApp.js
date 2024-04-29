@@ -50,7 +50,7 @@ const LearnerSubmissions = [
     learner_id: 125,
     assignment_id: 2,
     submission: {
-      submitted_at: "2023-02-12",
+      submitted_at: "2024-05-05T00:00:00.000Z",
       score: 150
     }
   },
@@ -261,6 +261,7 @@ let avgScores = []
 let avg = 0.0;
 let assignment = 0;
 let studId = 0;
+const date = new Date();
 for (let i = 0; i < allpoints.length; i++) {
 
   for (let j = 0; j < learnerId.length;  j++) {
@@ -272,6 +273,12 @@ for (let i = 0; i < allpoints.length; i++) {
       //  console.log("ass" + assignment)
       try{
       avg = learnerId[j].score / allpoints[i].pointsPossible
+      const dueDate = new Date(LearnerSubmission[j].submission.submitted_at);
+            
+      if(dueDate > date){
+        avg *= 0.1;
+        console.log("new avg is " + avg)
+      }
      } catch(e){
       console.log("cant divide by zero")
      }
@@ -289,7 +296,7 @@ for (let i = 0; i < allpoints.length; i++) {
 return avgScores;
 }
 
-//console.log(eachAssiAvg(assignmentInfo, LearnerSubmissions)) // [{ learnerId: 125, assignmentId: 1, assignmentAvg: 0.94 },{ learnerId: 132, assignmentId: 1, assignmentAvg: 0.78 },{ learnerId: 125, assignmentId: 2, assignmentAvg: 1 },{learnerId: 132,assignmentId: 2,assignmentAvg: 0.93}]
+console.log(eachAssiAvg(assignmentInfo, LearnerSubmissions)) // [{ learnerId: 125, assignmentId: 1, assignmentAvg: 0.94 },{ learnerId: 132, assignmentId: 1, assignmentAvg: 0.78 },{ learnerId: 125, assignmentId: 2, assignmentAvg: 1 },{learnerId: 132,assignmentId: 2,assignmentAvg: 0.93}]
 
 
 /* result
@@ -340,5 +347,5 @@ for(let i = 0; i < avgScores.length; i++){
 }
 }
 
-console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions, assignmentInfo))
+//console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions, assignmentInfo))
 
