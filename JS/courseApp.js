@@ -272,7 +272,7 @@ for (let i = 0; i < allpoints.length; i++) {
 return avgScores;
 }
 
-console.log(eachAssiAvg(assignmentInfo, LearnerSubmissions))
+//console.log(eachAssiAvg(assignmentInfo, LearnerSubmissions)) // [{ learnerId: 125, assignmentId: 1, assignmentAvg: 0.94 },{ learnerId: 132, assignmentId: 1, assignmentAvg: 0.78 },{ learnerId: 125, assignmentId: 2, assignmentAvg: 1 },{learnerId: 132,assignmentId: 2,assignmentAvg: 0.93}]
 
 
 /* result
@@ -292,25 +292,26 @@ console.log(eachAssiAvg(assignmentInfo, LearnerSubmissions))
   ];
 */
 
-//console.log(getLearnerId(LearnerSubmissions))// [ 125, 125, 125, 132, 132 ]
+//console.log(eachAssiAvg(assignmentInfo, LearnerSubmissions)) // [{ learnerId: 125, assignmentId: 1, assignmentAvg: 0.94 },{ learnerId: 132, assignmentId: 1, assignmentAvg: 0.78 },{ learnerId: 125, assignmentId: 2, assignmentAvg: 1 },{learnerId: 132,assignmentId: 2,assignmentAvg: 0.93}]
 //console.log(courseAvg(assignmentInfo, LearnerSubmissions)) // [{ LearnerId: 125, average: 2.985 }, { LearnerId: 132, average: 0.895 }]
-//console.log(courseAvg(assignmentInfo, LearnerSubmissions)) //[ { LearnerId: 125, average: 2.985 }, { LearnerId: 132, average: 0.895 } ]
+
 function result(LearnerSubmissions, assignmentInfo) {
-  //let learnerID = points(assignmentInfo);
   let avgScores = courseAvg(assignmentInfo, LearnerSubmissions)
   let eachAvg = eachAssiAvg(assignmentInfo, LearnerSubmissions);
-  //let allpoints = points(assignmentInfo);
-// let restultPrint = []
-// restultPrint.push({
-//   id: d,
-//   score: scr,
-//   assignmentId: assigId
-// });
 for(let i = 0; i < avgScores.length; i++){
   let id = avgScores[i].LearnerId;
   let avg = avgScores[i].average;
-  let eachAssId = 1 // eachAvg[i].id
-  let eachAvrg = 2 //eachAvg[i].avg
+  let eachAvgObj= {}
+  let eachAssId = 0
+  let eachAvrg = 0
+  for(let j = 0; j < eachAvg.length; j++){
+    if(eachAvg[j].learnerId == id){
+      eachAvgObj[eachAvg[j].assignmentId] = eachAvg[j].assignmentAvg
+      eachAssId = Object.keys(eachAvgObj)
+        eachAvrg = Object.values(eachAvgObj)
+    }
+  }
+
   console.log(`
     { 
       id: ${id}, 
@@ -321,4 +322,32 @@ for(let i = 0; i < avgScores.length; i++){
 }
 }
 
-//console.log(result(LearnerSubmissions, assignmentInfo))
+console.log(result(LearnerSubmissions, assignmentInfo))
+
+function result1(LearnerSubmissions, assignmentInfo) {
+  let avgScores = courseAvg(assignmentInfo, LearnerSubmissions);
+  let eachAvg = eachAssiAvg(assignmentInfo, LearnerSubmissions);
+  let resultArray = [];
+
+  for (let i = 0; i < avgScores.length; i++) {
+    let id = avgScores[i].LearnerId;
+    let avg = avgScores[i].average;
+    let eachAvrg = {};
+
+    for (let j = 0; j < eachAvg.length; j++) {
+      if (eachAvg[j].learnerId === id) {
+        eachAvrg[eachAvg[j].assignmentId] = eachAvg[j].assignmentAvg;
+      }
+    }
+
+    resultArray.push({
+      id: id,
+      avg: avg,
+      ...eachAvrg
+    });
+  }
+
+  console.log(resultArray);
+}
+
+//result1(LearnerSubmissions, assignmentInfo)
