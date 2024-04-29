@@ -1,6 +1,6 @@
 // The provided course information.
 const CourseInfo = {
-  id: 451,
+  id: 4510,
   name: "Introduction to JavaScript"
 };
 
@@ -80,13 +80,26 @@ const LearnerSubmissions = [
   }
 ];
 
+//If an AssignmentGroup does not belong to its course (mismatching course_id), your program should throw an
+//error, letting the user know that the input was invalid.
 
-
+function checkCourseMatch(AssiGroup, CouInfo){
+try {
+  if(AssiGroup.course_id !== CouInfo.id){
+    throw new Error("mismatching course_id")
+  }
+}catch(e){
+  console.log(e.message)
+  }
+}
 /********************//********************/
 
 // get learners ID
 function getLearnerId(LearnerSubmission) {
   //LearnerSubmission.filter(function(item){console.log(item.learner_id)})
+
+  checkCourseMatch(AssignmentGroup, CourseInfo);
+
   let learnerID = []
   for (let i = 0; i < LearnerSubmission.length; i++) {
     const learnerId = LearnerSubmission[i].learner_id;
@@ -108,8 +121,8 @@ function getLearnerId(LearnerSubmission) {
   return learnerID;
 }
 
-// let learnerID = getLearnerId(LearnerSubmissions);
-// console.log(learnerID)
+let learnerID = getLearnerId(LearnerSubmissions);
+console.log(learnerID)
 
 /****************************************/
 
@@ -148,8 +161,8 @@ function learnerTotalScore(LearnerSubmission) {
   let learnerScore = [];
   let d = LearnerSubmission[0].learner_id;
   let assigId = [];
-  let allpoints = points(assignmentInfo);
-  let pointIndex = 0
+  //let allpoints = points(assignmentInfo);
+  //let pointIndex = 0
   //let pointId = allpoints[pointIndex].id;
   for (let i = 0; i < LearnerSubmission.length; i++) {
     // console.log(LearnerSubmission[i].assignment_id)
@@ -295,9 +308,9 @@ return avgScores;
 //console.log(eachAssiAvg(assignmentInfo, LearnerSubmissions)) // [{ learnerId: 125, assignmentId: 1, assignmentAvg: 0.94 },{ learnerId: 132, assignmentId: 1, assignmentAvg: 0.78 },{ learnerId: 125, assignmentId: 2, assignmentAvg: 1 },{learnerId: 132,assignmentId: 2,assignmentAvg: 0.93}]
 //console.log(courseAvg(assignmentInfo, LearnerSubmissions)) // [{ LearnerId: 125, average: 2.985 }, { LearnerId: 132, average: 0.895 }]
 
-function result(LearnerSubmissions, assignmentInfo) {
-  let avgScores = courseAvg(assignmentInfo, LearnerSubmissions)
-  let eachAvg = eachAssiAvg(assignmentInfo, LearnerSubmissions);
+function result(LearnerSubmission, assigInfo) {
+  let avgScores = courseAvg(assigInfo, LearnerSubmission)
+  let eachAvg = eachAssiAvg(assigInfo, LearnerSubmission);
 for(let i = 0; i < avgScores.length; i++){
   let id = avgScores[i].LearnerId;
   let avg = avgScores[i].average;
@@ -308,7 +321,7 @@ for(let i = 0; i < avgScores.length; i++){
     if(eachAvg[j].learnerId == id){
       eachAvgObj[eachAvg[j].assignmentId] = eachAvg[j].assignmentAvg
       eachAssId = Object.keys(eachAvgObj)
-        eachAvrg = Object.values(eachAvgObj)
+      eachAvrg = Object.values(eachAvgObj)
     }
   }
 
@@ -324,30 +337,3 @@ for(let i = 0; i < avgScores.length; i++){
 
 console.log(result(LearnerSubmissions, assignmentInfo))
 
-function result1(LearnerSubmissions, assignmentInfo) {
-  let avgScores = courseAvg(assignmentInfo, LearnerSubmissions);
-  let eachAvg = eachAssiAvg(assignmentInfo, LearnerSubmissions);
-  let resultArray = [];
-
-  for (let i = 0; i < avgScores.length; i++) {
-    let id = avgScores[i].LearnerId;
-    let avg = avgScores[i].average;
-    let eachAvrg = {};
-
-    for (let j = 0; j < eachAvg.length; j++) {
-      if (eachAvg[j].learnerId === id) {
-        eachAvrg[eachAvg[j].assignmentId] = eachAvg[j].assignmentAvg;
-      }
-    }
-
-    resultArray.push({
-      id: id,
-      avg: avg,
-      ...eachAvrg
-    });
-  }
-
-  console.log(resultArray);
-}
-
-//result1(LearnerSubmissions, assignmentInfo)
