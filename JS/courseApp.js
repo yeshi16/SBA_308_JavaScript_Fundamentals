@@ -98,7 +98,7 @@ try {
 function getLearnerId(LearnerSubmission) {
   //LearnerSubmission.filter(function(item){console.log(item.learner_id)})
 
-  checkCourseMatch(AssignmentGroup, CourseInfo);
+  //checkCourseMatch(AssignmentGroup, CourseInfo);
 
   let learnerID = []
   for (let i = 0; i < LearnerSubmission.length; i++) {
@@ -121,8 +121,8 @@ function getLearnerId(LearnerSubmission) {
   return learnerID;
 }
 
-let learnerID = getLearnerId(LearnerSubmissions);
-console.log(learnerID)
+// let learnerID = getLearnerId(LearnerSubmissions);
+// console.log(learnerID)
 
 /****************************************/
 
@@ -170,7 +170,7 @@ function learnerTotalScore(LearnerSubmission) {
     // console.log(pointIndex)
     //if(LearnerSubmission[i].assignment_id == allpoints[pointIndex].id){
     let asid = LearnerSubmission[i].assignment_id
-    pointIndex++
+    //pointIndex++
     if (d !== LearnerSubmission[i].learner_id) {
       const scoreObj = {
         id: d,
@@ -232,7 +232,12 @@ function courseAvg(assigInfo, LearnerSubmission) {
       }
 
     }
-    avg = scores[i].score / totalPts
+    try{
+      avg = scores[i].score / totalPts
+     } catch(e){
+      console.log("cant divide by zero")
+     }
+   
     // console.log(avg)
     avgScores.push({
       LearnerId: scores[i].id,
@@ -243,12 +248,6 @@ function courseAvg(assigInfo, LearnerSubmission) {
 }
 
 //console.log(courseAvg(assignmentInfo, LearnerSubmissions))
-
-
-
-
-
-
 
 
 // get each assignment avg
@@ -271,7 +270,11 @@ for (let i = 0; i < allpoints.length; i++) {
       //  console.log("std" + studId)
       assignment = allpoints[i].id;
       //  console.log("ass" + assignment)
+      try{
       avg = learnerId[j].score / allpoints[i].pointsPossible
+     } catch(e){
+      console.log("cant divide by zero")
+     }
       // console.log("avg" + avg)
       const scoreObj = {
           learnerId: studId,
@@ -309,7 +312,8 @@ return avgScores;
 //console.log(eachAssiAvg(assignmentInfo, LearnerSubmissions)) // [{ learnerId: 125, assignmentId: 1, assignmentAvg: 0.94 },{ learnerId: 132, assignmentId: 1, assignmentAvg: 0.78 },{ learnerId: 125, assignmentId: 2, assignmentAvg: 1 },{learnerId: 132,assignmentId: 2,assignmentAvg: 0.93}]
 //console.log(courseAvg(assignmentInfo, LearnerSubmissions)) // [{ LearnerId: 125, average: 2.985 }, { LearnerId: 132, average: 0.895 }]
 
-function result(LearnerSubmission, assigInfo) {
+function getLearnerData(CouInfo, AssiGroup, LearnerSubmission, assigInfo) {
+  checkCourseMatch(AssiGroup, CouInfo);
   let avgScores = courseAvg(assigInfo, LearnerSubmission)
   let eachAvg = eachAssiAvg(assigInfo, LearnerSubmission);
 for(let i = 0; i < avgScores.length; i++){
@@ -336,5 +340,5 @@ for(let i = 0; i < avgScores.length; i++){
 }
 }
 
-console.log(result(LearnerSubmissions, assignmentInfo))
+console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions, assignmentInfo))
 
