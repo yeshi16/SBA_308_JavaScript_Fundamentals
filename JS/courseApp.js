@@ -300,6 +300,6 @@ for(let i = 0; i < avgScores.length; i++){
 }
 }
 
-console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions, assignmentInfo))
+//console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions, assignmentInfo))
 
 //  ${eachAssId}: ${eachAvrg}
