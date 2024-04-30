@@ -294,11 +294,12 @@ for(let i = 0; i < avgScores.length; i++){
     { 
       id: ${id}, 
       avg: ${avg},
-      ${eachAssId}: ${eachAvrg}
+      ${eachAssId.map((id, index) => `${id}: ${eachAvrg[index]}`).join(',\n\t\t\t')}
     } 
   `);
 }
 }
 
-//console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions, assignmentInfo))
+console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions, assignmentInfo))
 
+//  ${eachAssId}: ${eachAvrg}
